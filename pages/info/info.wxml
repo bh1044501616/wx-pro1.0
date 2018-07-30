@@ -10,7 +10,14 @@
 	</view>
 </scroll-view>
 
-<view id="infoBox">
+<view id="serverInfo" style="display: {{serverInfo===''?'none':'block'}};">
+	<icon type="info" size="50"></icon>
+	<view>
+		{{serverInfo}}
+	</view>
+</view>
+
+<view id="infoBox" style="display: {{serverInfo===''?'block':'none'}};">
 	<block wx:for="{{items}}">
 		<view class="item-box">
 			<view class="lefty">
@@ -42,6 +49,6 @@
 	</block>
 </view>
 
-<view id="newsNumTip" style="display: {{newsNumTip}}">
+<view id="newsNumTip" style="display: {{newsNumTip&&(serverInfo===''?'block':'none')}}">
 	没有更多了~
 </view>

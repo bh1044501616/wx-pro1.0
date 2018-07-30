@@ -176,21 +176,21 @@
       <view class="details">
         <view class="detail">
           <view class="image">
-           <image src="images/icon_phone.png" mode="widthFix"/>
+           <image src="images/icon_phone.png"/>
           </view>
-          <text>13131464346</text>
+          <text>18613310432</text>
         </view>
         <view class="detail">
           <view class="image">
-           <image src="images/icon_mail.png" mode="widthFix"/>
+           <image src="images/icon_mail.png"/>
           </view>
-          <text>1044501616@qq.com</text>
+          <text>mingym@spichina.org.cn</text>
         </view>
         <view class="detail">
           <view class="image">
-           <image src="images/icon_position.png" mode="widthFix"/>
+           <image src="images/icon_position.png"/>
           </view>
-          <text>河北省 廊坊市 新华路 199号</text>
+          <text>北京市海淀区上地街道东北旺西路8号\n中关村软件园8号楼华夏科技大厦2层227C室</text>
         </view>
       </view>
     </view>

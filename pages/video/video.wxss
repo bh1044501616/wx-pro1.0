@@ -390,3 +390,11 @@ page{
 	color:#ccc;
 	text-align: center;
 }
+
+/**信息获取提示*/
+#serverInfo{
+	width:100%;
+	margin: auto;
+	text-align: center;
+	margin-top: 20px;
+}

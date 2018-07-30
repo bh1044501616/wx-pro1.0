@@ -138,3 +138,10 @@ page{
 	text-align: left;
 	padding-right: 5px;
 }
+
+#serverInfo{
+	width:100%;
+	margin: auto;
+	text-align: center;
+	margin-top: 20px;
+}

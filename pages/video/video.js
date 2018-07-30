@@ -1,5 +1,9 @@
 var arr = [];
 var app = getApp();
+
+//提示信息
+const NETWORK_ERROR = '网络繁忙，请稍后重试';
+
 function getMB(b){
 	return (b/1024.0/1024.0).toFixed(2);
 }
@@ -14,10 +18,13 @@ var tasks = new Array();
 var downloadTask = new Array();
 /* 判断滑动事件类型*/
 var scrollY = 0;
+
+//链接
+const URL = app.globalData.staticUrl;
 /*	获取信息url*/
-const loadUrl = "http://localhost:8080/smallProject/meeting/load.do";
+const loadUrl = URL + "meeting/load.do";
 /*  ppt下载链接*/
-const pptUrl = "http://localhost:8080/smallProject/download/meeting.do?"
+const pptUrl = URL + "download/meeting.do?";
 /**
  *	下载链接中的日期处理
 
@@ -137,7 +144,9 @@ Page({
       	//已下载文件所存储的目录
       	savedFilePath:'',
       	//已下在文件所在目录的提示显示设定
-      	savedFilePathShow:'none'
+      	savedFilePathShow:'none',
+      	//获取信息提示
+      	serverInfo:''
 	},
 	onLoad:function() {
 		var that = this;	
@@ -149,6 +158,7 @@ Page({
 				that.setData({
 					array:res.data.data.list,
 					// array:res.data
+					serverInfo:''
 				});
 				/* 请求参数（iqalience）*/
 				pageObject = res.data.data.pageObject;
@@ -159,6 +169,9 @@ Page({
 				  title: '网络超时..',
 				  icon: 'loading',
 				  duration: 2000
+				});
+				that.setData({
+					serverInfo:NETWORK_ERROR
 				});
 			}
 		});
@@ -226,6 +239,7 @@ Page({
 				that.setData({
 					array:res.data.data.list, 
 					// array:res.data
+					serverInfo:''
 				});
 				wx.hideLoading();
 			},
@@ -234,6 +248,9 @@ Page({
 				  title: '网络超时..',
 				  icon: 'loading',
 				  duration: 2000
+				});
+				that.setData({
+					serverInfo:NETWORK_ERROR
 				});
 			}
 		});
@@ -302,7 +319,6 @@ Page({
 				downloading[i].status = '继续';
 			}
 			if(status == '继续'){
-				console.log('进入继续');
 				downloading[i].progress = 0;
 				downloading[i].currentSize = 0;
 				downloading[i].status = '终断';
@@ -469,10 +485,7 @@ Page({
 	/**购票咨询--makeACall*/
 	makeCall:function(){
 		wx.makePhoneCall({
-			phoneNumber:'13131464346',
-			success:function(){
-				console.log('电话拨打成功');
-			},
+			phoneNumber:'13681206054'
 		});
 	},
 	/**购票咨询信息提示*/

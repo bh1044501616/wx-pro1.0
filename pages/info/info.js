@@ -1,6 +1,12 @@
 // pages/info/info.js
 var app = getApp();
 
+//提示信息
+const NETWORK_ERROR = '网络繁忙，请稍后重试';
+
+//请求链接
+const URL = app.globalData.staticUrl;
+const LOADURL = URL + 'news/load.do';
 
 /*Long转换为Date格式的字符串*/
 function dateFormat(longTypeDate){  
@@ -14,7 +20,6 @@ function dateFormat(longTypeDate){ 
 }
 
 
-const LOADURL = 'http://localhost:8080/smallProject/news/load.do';
 Page({
 
   /**
@@ -29,7 +34,9 @@ Page({
     //赞的动画
     praiseAnimation:{},
     praiseAnimationIndex:0,
-    praiseIcon:[]
+    praiseIcon:[],
+    //信息获取提示
+    serverInfo:''
   },
 
   /**
@@ -40,15 +47,21 @@ Page({
     let that = this;
 
     wx.request({
-      url:'http://localhost:8080/smallProject/news/load.do',
+      url:LOADURL,
       success:function(response){
         let items_ = response.data.data.list;
         let pageObject_ = response.data.data.pageObject;
         pageObject_.pageSize += 5;
         that.setData({
           items:items_,
-          pageObject:pageObject_
+          pageObject:pageObject_,
+          serverInfo:''
         });
+      },
+      fail:function(){
+        that.setData({
+          serverInfo:NETWORK_ERROR
+        })
       },
       complete:function(){
         //同步动画和列表
@@ -162,15 +175,21 @@ Page({
       selectedItem:id
     });
     wx.request({
-      url:'http://localhost:8080/smallProject/news/load.do?id=' + id,
+      url:LOADURL + '?id=' + id,
       success:function(response){
         let items_ = response.data.data.list;
         let pageObject_ = response.data.data.pageObject;
         pageObject_.pageSize += 5;
         that.setData({
           items:items_,
-          pageObject:pageObject_
+          pageObject:pageObject_,
+          serverInfo:''
         });
+      },
+      fail:function(){
+        that.setData({
+          serverInfo:NETWORK_ERROR
+        })
       },
       complete:function(){
         //同步动画和列表
@@ -190,6 +209,9 @@ Page({
 
     //赞的动画
     let animations = that.data.praiseAnimation;
+
+    //反应该条信息是否已经被赞过
+    let praiseFlag = that.data.praiseIcon[index];
 
     //为动画赋值
       //有效动画
@@ -217,9 +239,6 @@ Page({
       praiseIcon:icons
     });
 
-    //反应该条信息是否已经被赞过
-    let praiseFlag = that.data.praiseIcon[index];
-
     animations[index] = noneAnimation.export();
     that.setData({
       praiseAnimation:animations
@@ -228,7 +247,7 @@ Page({
     if(praiseFlag == 'praise'){
       //当该条消息未被赞时才发送请求
       wx.request({
-        url:app.globalData.staticUrl + 'news/addPraise.do?id=' + id,
+        url:URL + 'news/addPraise.do?id=' + id,
         success:function(){
           //更新赞后的数字
           that.refreshPage();
@@ -243,7 +262,7 @@ Page({
     let items_ = that.data.items;
     let animations = new Array(items_.length);
 
-    let icons = animations;
+    let icons = new Array(items_.length);
     for(let i=0;i<icons.length;i++){
       icons[i] = 'praise';
     }
@@ -260,7 +279,7 @@ Page({
     let id = arg.currentTarget.dataset.id;
 
     wx.request({
-      url:app.globalData.staticUrl + 'news/addWatch.do?id=' + id,
+      url:URL + 'news/addWatch.do?id=' + id,
     });
   },
   /*
@@ -271,7 +290,7 @@ Page({
     let id = that.data.selectedItem;
 
      wx.request({
-      url:'http://localhost:8080/smallProject/news/load.do?id=' + id,
+      url:LOADURL + '?id=' + id,
       success:function(response){
         let items_ = response.data.data.list;
         let pageObject_ = response.data.data.pageObject;

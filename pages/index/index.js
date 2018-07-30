@@ -51,8 +51,8 @@ Page({
     markers: [{
       iconPath: "images/marker.png",
       id: 0,
-      latitude:41.20,
-      longitude:116.63,
+      latitude:40.044666,
+      longitude:116.299267,
       width: 50,
       height: 42
     }],

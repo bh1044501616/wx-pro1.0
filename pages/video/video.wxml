@@ -49,8 +49,14 @@
 
 <!-- 	<view class="title">大会资料</view>
 	<view class="line_title"></view> -->
+	<view id="serverInfo" style="display: {{serverInfo===''?'none':'block'}};">
+		<icon type="info" size="50"></icon>
+		<view>
+			{{serverInfo}}
+		</view>
+	</view>
 
-	<view class="contents">  
+	<view class="contents" style="display: {{serverInfo===''?'block':'none'}};">  
 		<block wx:for="{{array}}">
 			<view class="content">
 				<view class="info">
